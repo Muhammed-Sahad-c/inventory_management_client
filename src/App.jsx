@@ -1,15 +1,21 @@
-import { samleReq } from "./services/UserAuthentication"
+import ErrorPage from './pages/ErrorPage';
+import LoginPage from "./pages/LoginPage";
+import Dashboard from './pages/Dashboard';
+import ProtectedRoute from "./protected-route/ProtectedRoute";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const fn = async () => {
-    const test = await samleReq();
-    console.log(test.data)
-  }
-
-  fn();
   return (
     <>
-      <h1>this is sahad</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={< LoginPage />} />
+          <Route element={<ProtectedRoute route={"/login"} />}>
+            <Route path="/" element={< Dashboard />} />
+          </Route>
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

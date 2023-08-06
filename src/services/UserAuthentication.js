@@ -1,5 +1,10 @@
 import { userAxiosInstance } from "../axios/instance";
 
-export const samleReq = () => {
-  return userAxiosInstance.post("/test", { data: "hai" });
+export const validateLoginDetails = (formData) => {
+  return userAxiosInstance.get("/login", { headers: formData });
 };
+
+export const getUserDetails = () => {
+  return userAxiosInstance.get("/getuserdetails");
+};
+
