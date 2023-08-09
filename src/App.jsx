@@ -14,7 +14,7 @@ function App() {
           <Route path="/login" element={< LoginPage />} />
           <Route element={<ProtectedRoute route={"/login"} />}>
             <Route path="/" element={< DashboardPage />} />
-            <Route path="/inventory" element={< ProductsPage />} />
+            <Route path="/products" element={< ProductsPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

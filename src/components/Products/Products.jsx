@@ -1,23 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Alert1 from '../alerts/Alert1';
 import "../../assets/styles/products.css";
 import AddProductModal from '../modals/AddProductModal';
-
+import { createNewProduct } from '../../services/ProductServices';
+import DataTable from '../Products/ProductList';
 function Products() {
     const [process, setProcess] = useState(false);
     const [selectedImg, setSelectedImg] = useState(undefined);
     const [addProductModal, setAddProductModal] = useState(false);
     const [addProductStatus, setAddProductStatus] = useState(false);
+    const [alertModal, setAlertModal] = useState({ status: false, message: "", variant: "" });
     const [errors, setErrors] = useState({ name: "", description: "", quantity: "", price: "", image: "" });
     const [productDetails, setProductDetails] = useState({ name: "", description: "", quantity: "", price: "", image: undefined });
 
-    const { name, description, quantity, price, image } = productDetails
+    const { name, description, quantity, price, image } = productDetails;
+
+    const clearform = () => {
+        setSelectedImg(undefined);
+        setAddProductStatus(false);
+        setErrors({ name: "", description: "", quantity: "", price: "", image: "" });
+        setProductDetails({ name: "", description: "", quantity: "", price: "", image: undefined });
+    }
 
     const showAddProductModal = () => {
         setAddProductModal(true);
         setSelectedImg(undefined);
         setAddProductStatus(false);
-        setErrors({ name: "", description: "", quantity: "", price: "", image: "" });
-        setProductDetails({ name: "", description: "", quantity: "", price: "", image: undefined });
+        clearform();
     };
 
     const validateForm = () => {
@@ -25,14 +34,14 @@ function Products() {
 
         if (name.trimEnd().length === 0) {
             newErrors.name = "* Name cannot be empty";
-        } else if (name.length > 50) {
-            newErrors.name = "* name should not exceed 50 characters.";
+        } else if (name.length > 1000) {
+            newErrors.name = "* name should not exceed 1000 characters.";
         }
 
         if (description.trimEnd().length === 0) {
             newErrors.description = "* Description cannot be empty";
-        } else if (description.length > 200) {
-            newErrors.description = "* description should not exceed 200 characters.";
+        } else if (description.length > 10000) {
+            newErrors.description = "* description should not exceed 10000 characters.";
         }
 
         if (quantity.length === 0) {
@@ -58,28 +67,38 @@ function Products() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const submitUserForm = e => {
+    const submitUserForm = async e => {
         e.preventDefault();
         if (process === false) {
             setProcess(true);
-            setAddProductStatus(true)
+            setAddProductStatus(true);
             if (validateForm()) {
-                const product_photo = new FormData();
-                product_photo.append('file', image);
-                const request_data = {
-                    product_photo,
+                const formData = new FormData();
+                formData.append('file', image);
+                const productInfo = {
                     price: +price,
                     quantity: +quantity,
                     name: name.trimEnd(),
                     description: description.trimEnd(),
                 }
-                // send api request
-                setProcess(false);
-                setAddProductStatus(false);
-                console.log(request_data);
+                formData.append('product_details', JSON.stringify(productInfo));
+                const response = await createNewProduct(formData);
+                console.log(response);
+                const { status, message } = response.data;
+                if (status) {
+                    setAddProductModal(false);
+                    clearform();
+                    setAlertModal({ status: true, message: message, variant: "success" });
+                } else {
+                    setAddProductModal(false);
+                    clearform();
+                    setAlertModal({ status: true, message: message, variant: "danger" });
+                }
             }
+            setProcess(false);
+            setAddProductStatus(false);
         }
-    }
+    };
 
     return (
         <>
@@ -88,8 +107,11 @@ function Products() {
                     <div className="col-12">
                         <h2 className='px-3 py-3'>Products</h2>
                     </div>
+                    <div className="col-12 px-5">
+                        <Alert1 alertModal={alertModal} setAlertModal={setAlertModal} />
+                    </div>
                     <div className="col-12 d-flex justify-content-end px-5">
-                        <button className="btn btn-success py-2 px-3" onClick={showAddProductModal}>add product</button>
+                        <button className="btn btn-success py-2 px-3" onClick={showAddProductModal}>Add product</button>
                         <AddProductModal
                             errors={errors}
                             setErrors={setErrors}
@@ -102,6 +124,9 @@ function Products() {
                             submitFormDetails={submitUserForm}
                             setProductDetails={setProductDetails}
                         />
+                    </div>
+                    <div className="col-12 px-5 py-5">
+                        <DataTable alert={alertModal} setAlert={setAlertModal} />
                     </div>
                 </div>
             </div>

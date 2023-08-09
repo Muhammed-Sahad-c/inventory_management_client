@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 function AddProductModal({ show, setShow, productDetails, setProductDetails, submitFormDetails, errors, setErrors, selectedImg, setSelectedImg, status }) {
 
-    const { name, description, quantity, price, image } = productDetails;
+    const { name, description, quantity, price } = productDetails;
 
     const handleClose = () => {
         setShow(false);

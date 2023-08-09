@@ -7,8 +7,8 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput } from 'md
 function Login() {
   const navigate = useNavigate();
   const [process, setProcess] = useState(false);
-  const [errors, setErrors] = useState({ email: "", password: "" });
   const [loginDetails, setLoginDetails] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" })
 
   const { email, password } = loginDetails;
 
@@ -59,19 +59,19 @@ function Login() {
 
   return (
     <>
-      <MDBContainer fluid className='p-3'>
+      <MDBContainer fluid className='p-3' >
         <MDBRow className='text-center d-flex justify-content-center align-items-center '>
           <MDBCol md='4'>
             <MDBCard className='my-5'>
               <MDBCardBody className='p-5'>
-                <div className="text-start py-3">
-                  <h2>Welcome back!</h2>
+                <div className="text-start py-3 ">
+                  <h2 style={{ overflow: "hidden" }}>Welcome back</h2>
                 </div>
-                <MDBInput wrapperClass='' placeholder='email' id='email' type='email' size='lg' name='email' className={`rounded-0 ${errors.email ? "border-danger" : ""}`} onChange={onInputChange} />
+                <MDBInput wrapperClass='' placeholder='Email' id='email' type='email' size='lg' name='email' className={`rounded-0 ${errors.email ? "border-danger" : ""}`} onChange={onInputChange} />
                 <div className="text-start">
                   <small className='text-danger'>{errors.email}</small>
-                </div> 
-                <MDBInput wrapperClass='pt-4' placeholder='password' id='password' type='password' name='password' size='lg' className={`rounded-0 ${errors.password ? "border-danger" : ""}`} onChange={onInputChange} />
+                </div>
+                <MDBInput wrapperClass='pt-4' placeholder='Password' id='password' type='password' name='password' size='lg' className={`rounded-0 ${errors.password ? "border-danger" : ""}`} onChange={onInputChange} />
                 <div className="text-start pb-4">
                   <small className='text-danger'>{errors.password}</small>
                 </div>
