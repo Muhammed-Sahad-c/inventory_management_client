@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Alert1 from '../alerts/Alert1';
 import "../../assets/styles/products.css";
-import DataTable from '../Products/ProductList';
-import AddProductModal from '../modals/AddProductModal';
 import { createNewProduct } from '../../services/ProductServices';
+const DataTable = React.lazy(() => import('../Products/ProductList'));
+const AddProductModal = React.lazy(() => import("../modals/AddProductModal"));
 
 function Products() {
     const [process, setProcess] = useState(false);
+    const [productList, setProductList] = useState([]);
     const [selectedImg, setSelectedImg] = useState(undefined);
     const [addProductModal, setAddProductModal] = useState(false);
     const [addProductStatus, setAddProductStatus] = useState(false);
@@ -24,10 +25,10 @@ function Products() {
     }
 
     const showAddProductModal = () => {
+        clearform();
         setAddProductModal(true);
         setSelectedImg(undefined);
         setAddProductStatus(false);
-        clearform();
     };
 
     const validateForm = () => {
@@ -85,15 +86,17 @@ function Products() {
                 formData.append('product_details', JSON.stringify(productInfo));
                 const response = await createNewProduct(formData);
                 console.log(response);
-                const { status, message } = response.data;
+                const { status, message, new_product } = response.data;
                 if (status) {
-                    setAddProductModal(false);
-                    clearform();
                     setAlertModal({ status: true, message: message, variant: "success" });
-                } else {
+                    setProductList(prev_list => [new_product, ...prev_list])
                     setAddProductModal(false);
-                    clearform();
+                } else if (status === false) {
+                    setAddProductModal(false);
                     setAlertModal({ status: true, message: message, variant: "danger" });
+                } else {
+                    const newErrors = { name: message, description: "", price: "", quantity: "", image: "" };
+                    setErrors(newErrors);
                 }
             }
             setProcess(false);
@@ -105,8 +108,8 @@ function Products() {
         <>
             <div className="container-fluid p-0">
                 <div className="row">
-                    <div className="col-12">
-                        <h2 className='px-3 py-3'>Products</h2>
+                    <div className="col-12 px-3">
+                        <h2 className='px-4 py-3'>Products</h2>
                     </div>
                     <div className="col-12 px-5">
                         <Alert1 alertModal={alertModal} setAlertModal={setAlertModal} />
@@ -115,21 +118,30 @@ function Products() {
                         <button className="btn btn-success py-2 px-3 btn-sm" onClick={showAddProductModal}>
                             <small>Add product</small>
                         </button>
-                        <AddProductModal
-                            errors={errors}
-                            setErrors={setErrors}
-                            show={addProductModal}
-                            selectedImg={selectedImg}
-                            status={addProductStatus}
-                            setShow={setAddProductModal}
-                            productDetails={productDetails}
-                            setSelectedImg={setSelectedImg}
-                            submitFormDetails={submitUserForm}
-                            setProductDetails={setProductDetails}
-                        />
+                        <Suspense fallback={<></>}>
+                            <AddProductModal
+                                errors={errors}
+                                setErrors={setErrors}
+                                show={addProductModal}
+                                selectedImg={selectedImg}
+                                status={addProductStatus}
+                                setShow={setAddProductModal}
+                                productDetails={productDetails}
+                                setSelectedImg={setSelectedImg}
+                                submitFormDetails={submitUserForm}
+                                setProductDetails={setProductDetails}
+                            />
+                        </Suspense>
                     </div>
                     <div className="col-12 px-5 py-5">
-                        <DataTable alert={alertModal} setAlert={setAlertModal} />
+                        <Suspense fallback={<div>loading.....</div>}>
+                            <DataTable
+                                alert={alertModal}
+                                setAlert={setAlertModal}
+                                productList={productList}
+                                setProductList={setProductList}
+                            />
+                        </Suspense>
                     </div>
                 </div>
             </div>

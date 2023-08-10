@@ -1,13 +1,12 @@
 import Table from 'react-bootstrap/Table';
-import { useEffect, useState } from 'react';
-import { getAllBasicProductDetails, getIndividualProductDetails, removeASpecificProductFromList } from '../../services/ProductServices';
-import ProductDetailsModal from '../modals/ProductDetailsModal';
 import AlertModal from '../modals/AlertModal';
+import React, { useEffect, useState } from 'react';
+const ProductDetailsModal = React.lazy(() => import("../modals/ProductDetailsModal"));
+import { getAllBasicProductDetails, getIndividualProductDetails, removeASpecificProductFromList } from '../../services/ProductServices';
 
-const DataTable = ({ alert, setAlert }) => {
+const DataTable = ({ alert, setAlert, productList, setProductList }) => {
     const [deleteId, setDeleteId] = useState({});
     const [searchTerm, setSearchTerm] = useState("");
-    const [productList, setProductList] = useState([]);
     const [req_process, setReq_process] = useState(false);
     const [warningModal, setWarningModal] = useState(false);
     const [productDetails, setProductDetails] = useState({});
@@ -38,10 +37,10 @@ const DataTable = ({ alert, setAlert }) => {
         if (req_process === false) {
             setReq_process(true);
             const response = await removeASpecificProductFromList(deleteId._id);
-            const { status, message } = response.data
+            const { status, message } = response.data;
             if (status) {
                 setWarningModal(false);
-                const updatedState = productList.filter(item => item._id !== deleteId._id)
+                const updatedState = productList.filter(item => item._id !== deleteId._id);
                 setProductList(updatedState);
                 setAlert({ status: true, message: message, variant: "success" });
             } else {
@@ -59,49 +58,59 @@ const DataTable = ({ alert, setAlert }) => {
 
     useEffect(() => {
         getAllBasicProductDetails().then(({ data }) => {
-            setProductList(data.products);
+            if (data.products.length !== 0) {
+                setProductList(data.products);
+            }
         })
     }, []);
 
-
     return (
         <>
-            <input
-                type="text"
-                value={searchTerm}
-                placeholder="Search items by name"
-                className='py-2 px-4 my-3'
-                onChange={e => setSearchTerm(e.target.value)}
-            />
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredData.map((item, index) => (
-                        <tr key={index}>
-                            <td>
-                                <small>{item.name}</small>
-                                <div className='d-flex gap-1 pt-4 justify-content-end'>
-                                    <button className='btn btn-sm text-primary' onClick={() => viewFullProductDetails(item._id)}><small>view</small></button>
-                                    <button className='btn btn-sm text-success'><small>edit</small></button>
-                                    <button className='btn btn-sm text-danger' onClick={() => showWarningBeforeDelete(item)}><small>delete</small></button>
-                                </div>
-                            </td>
-                            <td>{item.price}</td>
-                            <td>
-                                <img src={item.imageUrl} alt={""} style={{ width: '50px', height: '50px', objectFit: "contain" }} />
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+            {
+                productList == 0 ?
+                    <div className="col-12 px-5 py-5 text-center emptyProduts">
+                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/no-product-8316266-6632286.png" alt="" />
+                        <h6 className='text-muted'>No Products</h6>
+                    </div>
+                    :
+                    <div>
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            placeholder="Search items by name"
+                            className='py-2 px-4 my-3'
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredData.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <small>{item.name}</small>
+                                            <div className='d-flex gap-1 pt-4 justify-content-end'>
+                                                <button className='btn btn-sm text-primary' onClick={() => viewFullProductDetails(item._id)}><small>view</small></button>
+                                                <button className='btn btn-sm text-success'><small>edit</small></button>
+                                                <button className='btn btn-sm text-danger' onClick={() => showWarningBeforeDelete(item)}><small>delete</small></button>
+                                            </div>
+                                        </td>
+                                        <td>{item.price}</td>
+                                        <td>
+                                            <img src={item.imageUrl} alt={""} style={{ width: '50px', height: '50px', objectFit: "contain" }} />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+            }
 
-            {/* view product modal */}
             <ProductDetailsModal
                 show={viewProductModal}
                 setShow={setViewProductModal}
@@ -109,7 +118,6 @@ const DataTable = ({ alert, setAlert }) => {
                 setProductDetails={setProductDetails}
             />
 
-            {/* delete product alert */}
             <AlertModal
                 show={warningModal}
                 setShow={setWarningModal}

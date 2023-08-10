@@ -8,9 +8,6 @@ function AddProductModal({ show, setShow, productDetails, setProductDetails, sub
 
     const handleClose = () => {
         setShow(false);
-        setSelectedImg(undefined);
-        setErrors({ name: "", description: "", quantity: "", price: "", image: "" });
-        setProductDetails({ name: "", description: "", quantity: "", price: "", image: "" });
     };
 
     const onInputChange = e => {
