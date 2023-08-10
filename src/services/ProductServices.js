@@ -13,3 +13,7 @@ export const getIndividualProductDetails = (prod_id) => {
     headers: { prod_id },
   });
 };
+
+export const removeASpecificProductFromList = (prod_id) => {
+  return userAxiosInstance.post("/removeproduct", { prod_id });
+};

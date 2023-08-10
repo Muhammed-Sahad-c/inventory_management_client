@@ -1,12 +1,15 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
-import { getAllBasicProductDetails, getIndividualProductDetails } from '../../services/ProductServices';
+import { getAllBasicProductDetails, getIndividualProductDetails, removeASpecificProductFromList } from '../../services/ProductServices';
 import ProductDetailsModal from '../modals/ProductDetailsModal';
+import AlertModal from '../modals/AlertModal';
 
 const DataTable = ({ alert, setAlert }) => {
+    const [deleteId, setDeleteId] = useState({});
     const [searchTerm, setSearchTerm] = useState("");
     const [productList, setProductList] = useState([]);
     const [req_process, setReq_process] = useState(false);
+    const [warningModal, setWarningModal] = useState(false);
     const [productDetails, setProductDetails] = useState({});
     const [viewProductModal, setViewProductModal] = useState(false);
 
@@ -31,11 +34,35 @@ const DataTable = ({ alert, setAlert }) => {
         }
     }
 
+    const deleteASpecificProduct = async () => {
+        if (req_process === false) {
+            setReq_process(true);
+            const response = await removeASpecificProductFromList(deleteId._id);
+            const { status, message } = response.data
+            if (status) {
+                setWarningModal(false);
+                const updatedState = productList.filter(item => item._id !== deleteId._id)
+                setProductList(updatedState);
+                setAlert({ status: true, message: message, variant: "success" });
+            } else {
+                setAlert({ status: true, message: message, variant: "danger" });
+            }
+            setDeleteId({});
+            setReq_process(false);
+        }
+    }
+
+    const showWarningBeforeDelete = prodDetails => {
+        setWarningModal(true);
+        setDeleteId(prodDetails);
+    }
+
     useEffect(() => {
         getAllBasicProductDetails().then(({ data }) => {
             setProductList(data.products);
         })
     }, []);
+
 
     return (
         <>
@@ -62,7 +89,7 @@ const DataTable = ({ alert, setAlert }) => {
                                 <div className='d-flex gap-1 pt-4 justify-content-end'>
                                     <button className='btn btn-sm text-primary' onClick={() => viewFullProductDetails(item._id)}><small>view</small></button>
                                     <button className='btn btn-sm text-success'><small>edit</small></button>
-                                    <button className='btn btn-sm text-danger'><small>delete</small></button>
+                                    <button className='btn btn-sm text-danger' onClick={() => showWarningBeforeDelete(item)}><small>delete</small></button>
                                 </div>
                             </td>
                             <td>{item.price}</td>
@@ -80,6 +107,13 @@ const DataTable = ({ alert, setAlert }) => {
                 setShow={setViewProductModal}
                 productDetails={productDetails}
                 setProductDetails={setProductDetails}
+            />
+
+            {/* delete product alert */}
+            <AlertModal
+                show={warningModal}
+                setShow={setWarningModal}
+                proceedFn={deleteASpecificProduct}
             />
         </>
     );

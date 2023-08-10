@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react';
 import Alert1 from '../alerts/Alert1';
 import "../../assets/styles/products.css";
+import DataTable from '../Products/ProductList';
 import AddProductModal from '../modals/AddProductModal';
 import { createNewProduct } from '../../services/ProductServices';
-import DataTable from '../Products/ProductList';
+
 function Products() {
     const [process, setProcess] = useState(false);
     const [selectedImg, setSelectedImg] = useState(undefined);
@@ -111,7 +112,9 @@ function Products() {
                         <Alert1 alertModal={alertModal} setAlertModal={setAlertModal} />
                     </div>
                     <div className="col-12 d-flex justify-content-end px-5">
-                        <button className="btn btn-success py-2 px-3" onClick={showAddProductModal}>Add product</button>
+                        <button className="btn btn-success py-2 px-3 btn-sm" onClick={showAddProductModal}>
+                            <small>Add product</small>
+                        </button>
                         <AddProductModal
                             errors={errors}
                             setErrors={setErrors}
