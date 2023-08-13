@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 function ProductDetailsModal({ show, setShow, productDetails }) {
     const { imageUrl, name, description, quantity, price, stock } = productDetails;

@@ -1,6 +1,6 @@
-import React, { Suspense, useState } from 'react';
-import Alert1 from '../alerts/Alert1';
 import "../../assets/styles/products.css";
+import React, { Suspense, useState } from 'react';
+const Alert1 = React.lazy(() => import("../alerts/Alert1"));
 import { createNewProduct } from '../../services/ProductServices';
 const DataTable = React.lazy(() => import('../Products/ProductList'));
 const AddProductModal = React.lazy(() => import("../modals/AddProductModal"));

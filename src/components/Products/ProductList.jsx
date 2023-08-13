@@ -1,7 +1,9 @@
-import Table from 'react-bootstrap/Table';
-import AlertModal from '../modals/AlertModal';
 import React, { useEffect, useState } from 'react';
+const Table = React.lazy(() => import("react-bootstrap/Table"));
+const AlertModal = React.lazy(() => import("../modals/AlertModal"));
+const EditProductModal = React.lazy(() => import("../modals/EditProductModal"));
 const ProductDetailsModal = React.lazy(() => import("../modals/ProductDetailsModal"));
+
 import { getAllBasicProductDetails, getIndividualProductDetails, removeASpecificProductFromList } from '../../services/ProductServices';
 
 const DataTable = ({ alert, setAlert, productList, setProductList }) => {
@@ -9,8 +11,11 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [req_process, setReq_process] = useState(false);
     const [warningModal, setWarningModal] = useState(false);
+    const [editProDetails, setEditProDetails] = useState({});
     const [productDetails, setProductDetails] = useState({});
+    const [editProdModal, setEditProdModal] = useState(false);
     const [viewProductModal, setViewProductModal] = useState(false);
+    const [initialProductDetails, setInitialProductDetails] = useState({});
 
     const filteredData = productList.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -56,6 +61,17 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
         setDeleteId(prodDetails);
     }
 
+    const editProductDetails = async prod_id => {
+        const prod_details = await getIndividualProductDetails(prod_id);
+        if (prod_details.data.status) {
+            setInitialProductDetails(prod_details.data.fullDetails)
+            setEditProDetails(prod_details.data.fullDetails);
+            setEditProdModal(true);
+        } else {
+            // some error occurred
+        }
+    }
+
     useEffect(() => {
         getAllBasicProductDetails().then(({ data }) => {
             if (data.products.length !== 0) {
@@ -63,6 +79,7 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
             }
         })
     }, []);
+
 
     return (
         <>
@@ -77,8 +94,8 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
                         <input
                             type="text"
                             value={searchTerm}
-                            placeholder="Search items by name"
                             className='py-2 px-4 my-3'
+                            placeholder="Search items by name"
                             onChange={e => setSearchTerm(e.target.value)}
                         />
                         <Table striped bordered hover>
@@ -96,7 +113,7 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
                                             <small>{item.name}</small>
                                             <div className='d-flex gap-1 pt-4 justify-content-end'>
                                                 <button className='btn btn-sm text-primary' onClick={() => viewFullProductDetails(item._id)}><small>view</small></button>
-                                                <button className='btn btn-sm text-success'><small>edit</small></button>
+                                                <button className='btn btn-sm text-success' onClick={() => editProductDetails(item._id)}><small>edit</small></button>
                                                 <button className='btn btn-sm text-danger' onClick={() => showWarningBeforeDelete(item)}><small>delete</small></button>
                                             </div>
                                         </td>
@@ -122,6 +139,16 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
                 show={warningModal}
                 setShow={setWarningModal}
                 proceedFn={deleteASpecificProduct}
+            />
+
+            <EditProductModal
+                show={editProdModal}
+                productLIst={productList}
+                setShow={setEditProdModal}
+                setProductList={setProductList}
+                currentProductDetails={editProDetails}
+                setCurrentProductDetails={setEditProDetails}
+                initialProductDetails={initialProductDetails}
             />
         </>
     );
