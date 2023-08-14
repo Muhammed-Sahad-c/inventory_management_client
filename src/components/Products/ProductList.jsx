@@ -3,6 +3,7 @@ const Table = React.lazy(() => import("react-bootstrap/Table"));
 const AlertModal = React.lazy(() => import("../modals/AlertModal"));
 const EditProductModal = React.lazy(() => import("../modals/EditProductModal"));
 const ProductDetailsModal = React.lazy(() => import("../modals/ProductDetailsModal"));
+import EmptyDataStatus from '../emptyitems/EmptyDataStatus.jsx';
 
 import { getAllBasicProductDetails, getIndividualProductDetails, removeASpecificProductFromList } from '../../services/ProductServices';
 
@@ -16,6 +17,12 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
     const [editProdModal, setEditProdModal] = useState(false);
     const [viewProductModal, setViewProductModal] = useState(false);
     const [initialProductDetails, setInitialProductDetails] = useState({});
+
+
+    const emptyStatus = {
+        image: "https://cdni.iconscout.com/illustration/premium/thumb/no-product-8316266-6632286.png",
+        message: "No products"
+    }
 
     const filteredData = productList.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -86,8 +93,7 @@ const DataTable = ({ alert, setAlert, productList, setProductList }) => {
             {
                 productList == 0 ?
                     <div className="col-12 px-5 py-5 text-center emptyProduts">
-                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/no-product-8316266-6632286.png" alt="" />
-                        <h6 className='text-muted'>No Products</h6>
+                        <EmptyDataStatus message={emptyStatus.message} image={emptyStatus.image} />
                     </div>
                     :
                     <div>

@@ -9,5 +9,9 @@ export const submitSalesDetails = (data) => {
 };
 
 export const getItemsReport = () => {
-  return userAxiosInstance.get("/getinventoryreport")
-}
+  return userAxiosInstance.get("/getinventoryreport");
+};
+
+export const getSalesReport = () => {
+  return userAxiosInstance.get("/getsalesreport");
+};

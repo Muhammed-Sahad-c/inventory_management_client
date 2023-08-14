@@ -94,7 +94,7 @@ const CreateSaleModal = ({ show, setShow, salesDetails, setSalesDetails, errors,
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create new sale</Modal.Title>
+                    <Modal.Title>Sales Record Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

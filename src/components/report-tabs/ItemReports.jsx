@@ -47,7 +47,7 @@ const ItemReports = () => {
                     </div>
                     <div className="col-12 d-flex justify-content-end px-5">
                         <button className="btn btn-success py-2 px-3 btn-sm" onClick={openCreateSaleModal}>
-                            <small>Create Sale</small>
+                            <small>+</small>
                         </button>
                     </div>
                     <div className="col-12 px-5 py-5">
@@ -62,7 +62,7 @@ const ItemReports = () => {
                                         itemReports.length == 0 ?
                                             <EmptyDataStatus message={fallbackDetails.message} image={fallbackDetails.image} />
                                             :
-                                            <DataTableComponent columns={ItemReport_colums} data={itemReports} />
+                                            <DataTableComponent columns={ItemReport_colums} data={itemReports}  />
                                     }
                                 </div>
                         }

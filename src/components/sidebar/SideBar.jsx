@@ -27,7 +27,7 @@ function SideBar({ current_tab }) {
                             <CDBSidebarMenuItem icon="user" className={`sidebar-items rounded ${current_tab === 'customers' ? sidebar_active : ""}`}>Customers</CDBSidebarMenuItem>
                         </NavLink>
                         <hr />
-                        <NavLink exact to="/customers" activeClassName="activeClicked">
+                        <NavLink exact to="/salesreport" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="chart-bar" className={`sidebar-items rounded ${current_tab === 'sales' ? sidebar_active : ""}`}>Sales reports</CDBSidebarMenuItem>
                         </NavLink>
                         <NavLink exact to="/itemsreport" activeClassName="activeClicked">

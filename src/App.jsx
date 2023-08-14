@@ -7,6 +7,7 @@ import ProtectedRoute from "./protected-route/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Customers from "./pages/CustomersPage";
 import ItemReportsPage from "./pages/ItemReportsPage";
+import SaleRecordsPage from "./pages/SaleRecordsPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/products" element={< ProductsPage />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/itemsreport" element={<ItemReportsPage />} />
+            <Route path="/salesreport" element={<SaleRecordsPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

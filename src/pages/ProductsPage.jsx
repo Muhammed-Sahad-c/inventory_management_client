@@ -12,6 +12,7 @@ function ProductsPage() {
                 <Suspense fallback={<LoadingComponent />}>
                     <Products />
                 </Suspense>
+                
             </div>
         </>
     )

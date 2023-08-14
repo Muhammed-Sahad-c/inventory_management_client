@@ -6,9 +6,18 @@ const DataTableComponent = ({ data, columns }) => {
     <>
       <DataTable
         data={data}
-        pagination
-        highlightOnHover
         columns={columns}
+        pagination
+        paginationPerPage={7}
+        paginationRowsPerPageOptions={[7, 14, 24]}
+        paginationComponentOptions={{
+          rowsPerPageText: 'Rows per page:',
+          rangeSeparatorText: 'of',
+          noRowsPerPage: false,
+          selectAllRowsItem: false,
+          selectAllRowsItemText: 'All',
+        }}
+        searchable
       />
     </>
   );
