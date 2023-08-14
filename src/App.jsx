@@ -6,6 +6,7 @@ import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from "./protected-route/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Customers from "./pages/CustomersPage";
+import ItemReportsPage from "./pages/ItemReportsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={< DashboardPage />} />
             <Route path="/products" element={< ProductsPage />} />
             <Route path="/customers" element={<Customers />} />
+            <Route path="/itemsreport" element={<ItemReportsPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

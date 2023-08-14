@@ -1,7 +1,7 @@
 import '../../assets/styles/sidebar.css';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { CDBSidebar, CDBSidebarContent, CDBSidebarFooter, CDBSidebarHeader, CDBSidebarMenu, CDBSidebarMenuItem } from 'cdbreact';
-
+import { CDBDropDown } from 'cdbreact';
 
 function SideBar({ current_tab }) {
     const sidebar_active = `bg-primary text-white`;
@@ -26,6 +26,14 @@ function SideBar({ current_tab }) {
                         <NavLink exact to="/customers" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="user" className={`sidebar-items rounded ${current_tab === 'customers' ? sidebar_active : ""}`}>Customers</CDBSidebarMenuItem>
                         </NavLink>
+                        <hr />
+                        <NavLink exact to="/customers" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="chart-bar" className={`sidebar-items rounded ${current_tab === 'sales' ? sidebar_active : ""}`}>Sales reports</CDBSidebarMenuItem>
+                        </NavLink>
+                        <NavLink exact to="/itemsreport" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="chart-bar" className={`sidebar-items rounded ${current_tab === 'items' ? sidebar_active : ""}`}>Item reports</CDBSidebarMenuItem>
+                        </NavLink>
+                        <hr />
                     </CDBSidebarMenu>
                 </CDBSidebarContent>
                 <CDBSidebarFooter style={{ textAlign: 'center' }}>
