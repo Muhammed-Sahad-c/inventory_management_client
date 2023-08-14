@@ -109,7 +109,7 @@ function Products() {
             <div className="container-fluid p-0">
                 <div className="row">
                     <div className="col-12 px-3">
-                        <h2 className='px-4 py-3'>Products</h2>
+                        <h3 className='px-4 py-3'>Products</h3>
                     </div>
                     <div className="col-12 px-5">
                         <Alert1 alertModal={alertModal} setAlertModal={setAlertModal} />
@@ -118,20 +118,6 @@ function Products() {
                         <button className="btn btn-success py-2 px-3 btn-sm" onClick={showAddProductModal}>
                             <small>Add product</small>
                         </button>
-                        <Suspense fallback={<></>}>
-                            <AddProductModal
-                                errors={errors}
-                                setErrors={setErrors}
-                                show={addProductModal}
-                                selectedImg={selectedImg}
-                                status={addProductStatus}
-                                setShow={setAddProductModal}
-                                productDetails={productDetails}
-                                setSelectedImg={setSelectedImg}
-                                submitFormDetails={submitUserForm}
-                                setProductDetails={setProductDetails}
-                            />
-                        </Suspense>
                     </div>
                     <div className="col-12 px-5 py-5">
                         <Suspense fallback={<div>loading.....</div>}>
@@ -145,6 +131,20 @@ function Products() {
                     </div>
                 </div>
             </div>
+            <Suspense>
+                <AddProductModal
+                    errors={errors}
+                    setErrors={setErrors}
+                    show={addProductModal}
+                    selectedImg={selectedImg}
+                    status={addProductStatus}
+                    setShow={setAddProductModal}
+                    productDetails={productDetails}
+                    setSelectedImg={setSelectedImg}
+                    submitFormDetails={submitUserForm}
+                    setProductDetails={setProductDetails}
+                />
+            </Suspense>
         </>
     )
 }

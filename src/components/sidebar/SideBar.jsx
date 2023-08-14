@@ -23,8 +23,8 @@ function SideBar({ current_tab }) {
                         <NavLink exact to="/products" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="box" className={`sidebar-items rounded ${current_tab === 'products' ? sidebar_active : ""}`}>Products</CDBSidebarMenuItem>
                         </NavLink>
-                        <NavLink exact to="/tables" activeClassName="activeClicked">
-                            <CDBSidebarMenuItem icon="table" className='sidebar-items'>Tables</CDBSidebarMenuItem>
+                        <NavLink exact to="/customers" activeClassName="activeClicked">
+                            <CDBSidebarMenuItem icon="user" className={`sidebar-items rounded ${current_tab === 'customers' ? sidebar_active : ""}`}>Customers</CDBSidebarMenuItem>
                         </NavLink>
                     </CDBSidebarMenu>
                 </CDBSidebarContent>

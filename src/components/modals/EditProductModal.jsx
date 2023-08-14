@@ -108,39 +108,43 @@ function EditProductModal({ show, setShow, currentProductDetails, setCurrentProd
 
     const onSubmitForm = async e => {
         e.preventDefault();
-        if (process === false) {
-            setProcess(true);
-            if (validateForm()) {
-                const formData = new FormData();
-                const productInfo = {
-                    prod_id: _id,
-                    price: +price,
-                    quantity: +quantity,
-                    name: name.trimEnd(),
-                    description: description.trimEnd(),
-                }
-                if (typeof imageUrl === 'object') {
-                    formData.append('file', imageUrl);
-                } else {
-                    productInfo.imageUrl = imageUrl;
-                }
+        try {
 
-                formData.append('edited_product_details', JSON.stringify(productInfo));
-                const response = await updateEditedProductDetails(formData);
-                const { status, message, newImageUrl } = response.data;
-                if (response.status === 500) {
-                    setAlertModal({ status: true, message: message, variant: "danger" });
-                } else if (status) {
-                    const updatedProduct = { name, price: +price, _id: _id, imageUrl: newImageUrl };
-                    const updatedProducts = productLIst.map(product => (product._id === _id ? updatedProduct : product));
-                    setProductList(updatedProducts);
-                    setShow(false);
-                } else {
-                    const updatedErrors = { ...errors };
-                    updatedErrors.name = message;
-                    setErrors(updatedErrors);
+            if (process === false) {
+                setProcess(true);
+                if (validateForm()) {
+                    const formData = new FormData();
+                    const productInfo = {
+                        prod_id: _id,
+                        price: +price,
+                        quantity: +quantity,
+                        name: name.trimEnd(),
+                        description: description.trimEnd(),
+                    }
+                    if (typeof imageUrl === 'object') {
+                        formData.append('file', imageUrl);
+                    } else {
+                        productInfo.imageUrl = imageUrl;
+                    }
+
+                    formData.append('edited_product_details', JSON.stringify(productInfo));
+                    const response = await updateEditedProductDetails(formData);
+                    const { status, message, newImageUrl } = response.data;
+                    if (status) {
+                        const updatedProduct = { name, price: +price, _id: _id, imageUrl: newImageUrl };
+                        const updatedProducts = productLIst.map(product => (product._id === _id ? updatedProduct : product));
+                        setProductList(updatedProducts);
+                        setShow(false);
+                    } else {
+                        const updatedErrors = { ...errors };
+                        updatedErrors.name = message;
+                        setErrors(updatedErrors);
+                    }
                 }
+                setProcess(false);
             }
+        } catch (error) {
+            setAlertModal({ status: true, message: error.response.data.message, variant: "danger" });
             setProcess(false);
         }
     }
@@ -158,7 +162,7 @@ function EditProductModal({ show, setShow, currentProductDetails, setCurrentProd
 
     }, [currentProductDetails]);
 
-    
+
     return (
         <>
 

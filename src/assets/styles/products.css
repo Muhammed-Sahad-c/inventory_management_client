@@ -1,24 +1,4 @@
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
 .remove-btn {
   cursor: pointer;
 }
 
-.emptyProduts img {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
-  width: 200px;
-}
-
-.emptyProduts {
-  user-select: none;
-}

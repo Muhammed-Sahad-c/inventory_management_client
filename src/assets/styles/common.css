@@ -18,3 +18,31 @@ h5,
 h6 {
   overflow: hidden;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.emptyProduts img {
+  -webkit-filter: grayscale(100%); 
+  filter: grayscale(100%);
+  width: 100px;
+}
+
+.emptyProduts {
+  user-select: none;
+}
+
+.action-buttons{
+  background-color: rgba(255, 235, 205, 0);
+}
+
+.hided-overflow{
+  overflow: hidden;
+}

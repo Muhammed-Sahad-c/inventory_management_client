@@ -5,6 +5,7 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from "./protected-route/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Customers from "./pages/CustomersPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route element={<ProtectedRoute route={"/login"} />}>
             <Route path="/" element={< DashboardPage />} />
             <Route path="/products" element={< ProductsPage />} />
+            <Route path="/customers" element={<Customers />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
