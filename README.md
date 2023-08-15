@@ -23,4 +23,4 @@ Start the Server
       
     npm run dev
 
-Setup server side  https://github.com/00sahad/inventory_management_server
+Sever side configuration  https://github.com/00sahad/inventory_management_server
