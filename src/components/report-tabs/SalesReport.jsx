@@ -18,7 +18,7 @@ const SalesReport = () => {
             setSalesList(data.details)
             setProcess(false);
         }).catch(err => {
-            setDataStatus({ message: "asdfkjasdlkfjaslkddf", image: "https://cdni.iconscout.com/illustration/premium/thumb/server-error-8580684-6763409.png?f=webp" })
+            setDataStatus({ message: "Something went wrong please try again", image: "https://cdni.iconscout.com/illustration/premium/thumb/server-error-8580684-6763409.png?f=webp" })
             setProcess(false);
         })
     }, []);
@@ -40,7 +40,7 @@ const SalesReport = () => {
                                     loading...
                                 </div>
                                 :
-                                <div>
+                                <div className=' '>
                                     {
                                         salesList.length == 0 ?
                                             <EmptyDataStatus message={dataStatus.message} image={dataStatus.image} />

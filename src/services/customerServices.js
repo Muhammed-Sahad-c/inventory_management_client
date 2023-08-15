@@ -9,3 +9,7 @@ export const submitCustomerDetails = (details) => {
 export const getCustomerList = () => {
   return userAxiosInstance.get("/getcustomerlist");
 };
+
+export const getTransactionDetails = () => {
+  return userAxiosInstance.get("/gettransactionlist");
+};

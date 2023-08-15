@@ -85,7 +85,6 @@ function Products() {
                 }
                 formData.append('product_details', JSON.stringify(productInfo));
                 const response = await createNewProduct(formData);
-                console.log(response);
                 const { status, message, new_product } = response.data;
                 if (status) {
                     setAlertModal({ status: true, message: message, variant: "success" });

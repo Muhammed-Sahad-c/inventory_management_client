@@ -24,8 +24,6 @@ export const ListCustomers = ({ customersList, setCustomersList }) => {
     }, []);
 
 
-    console.log(filteredData)
-
     return (
         <>
             {
@@ -55,8 +53,8 @@ export const ListCustomers = ({ customersList, setCustomersList }) => {
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
+                                                <th>Address</th>
                                                 <th>Mobile</th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -66,11 +64,11 @@ export const ListCustomers = ({ customersList, setCustomersList }) => {
                                                         <td>
                                                             <small>{item.customerName}</small>
                                                         </td>
+                                                        <td>
+                                                            <small>{item.address}</small>
+                                                        </td>
                                                         <td >
                                                             <small>+91 {item.mobileNumber}</small>
-                                                        </td>
-                                                        <td className='d-flex justify-content-start align-items-start'>
-                                                            <button className='border-0 bg-none text-primary  action-buttons'><small>view</small></button>
                                                         </td>
                                                     </tr>
                                                 ))

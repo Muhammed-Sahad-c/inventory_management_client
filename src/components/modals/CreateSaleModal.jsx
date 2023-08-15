@@ -68,7 +68,6 @@ const CreateSaleModal = ({ show, setShow, salesDetails, setSalesDetails, errors,
                 try {
                     const response = await submitSalesDetails(salesDetails);
                     const { updatedDataObj } = response.data;
-                    console.log(updatedDataObj);
                     const updatedList = itemReports.map((item) => item._id === updatedDataObj._id ? updatedDataObj : item)
                     setItemReports(updatedList);
                     setShow(false);
@@ -133,13 +132,14 @@ const CreateSaleModal = ({ show, setShow, salesDetails, setSalesDetails, errors,
                                     <small className="text-danger">{errors.date}</small>
                                 </Form.Group>
                             </div>
-                            <div className="col-4"><Form.Select aria-label="Default select example" name="paymentMethod"
-                                value={paymentMethod}
-                                onChange={handleInputChange}>
-                                <option>payment type</option>
-                                <option value="credit card">Credi card</option>
-                                <option value="cash">cash</option>
-                            </Form.Select>
+                            <div className="col-4">
+                                <Form.Select aria-label="Default select example" name="paymentMethod"
+                                    value={paymentMethod}
+                                    onChange={handleInputChange}>
+                                    <option>payment type</option>
+                                    <option value="credit card">Credi card</option>
+                                    <option value="cash">cash</option>
+                                </Form.Select>
                                 <small className="text-danger">{errors.paymentMethod}</small></div>
                         </div>
                         <Form.Select

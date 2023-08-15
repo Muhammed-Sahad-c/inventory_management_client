@@ -1,7 +1,6 @@
-
- const formatDate = (dateString) => {
+const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US'); // You can adjust the locale if needed
+  return date.toLocaleDateString("en-US"); // You can adjust the locale if needed
 };
 
 export const ItemReport_colums = [
@@ -71,6 +70,35 @@ export const salesReport_Columns = [
   },
   {
     name: "Revenue",
+    selector: "revenue",
+    sortable: true,
+  },
+];
+
+export const customerTransactions_Columns = [
+  {
+    name: "Customer Name",
+    selector: "customerName.customerName",
+    sortable: true,
+  },
+  {
+    name: "Product Name",
+    selector: "product.name",
+    sortable: true,
+  },
+  {
+    name: "Date",
+    selector: "date",
+    sortable: true,
+    format: (row) => formatDate(row.date),
+  },
+  {
+    name: "Payment Method",
+    selector: "paymentMethod",
+    sortable: true,
+  },
+  {
+    name: "Expense",
     selector: "revenue",
     sortable: true,
   },
