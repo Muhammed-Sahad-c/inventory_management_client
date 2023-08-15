@@ -1,8 +1,26 @@
-# React + Vite
+Clone the project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+    https://github.com/00sahad/inventory_management_client.git
 
-Currently, two official plugins are available:
+Go to the project Directory
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    cd client
+
+Install dependencies
+
+    npm install
+
+Create .env file
+
+    type nul > .env
+
+## Environment Variables
+To run this project, you will need to add the following environment variables to your .env file
+
+`VITE_SERVER_URL` - Base Url to server
+
+Start the Server
+      
+    npm run dev
+
+Setup server side  https://github.com/00sahad/inventory_management_server
