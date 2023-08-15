@@ -15,3 +15,7 @@ export const getItemsReport = () => {
 export const getSalesReport = () => {
   return userAxiosInstance.get("/getsalesreport");
 };
+
+export const getdashboardinfo = () => {
+  return userAxiosInstance.get("/getdashboardinfo");
+};
