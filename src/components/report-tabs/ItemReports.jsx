@@ -15,7 +15,7 @@ const ItemReports = () => {
     const [showModal, setShowModal] = useState(false);
     const [itemReports, setItemReports] = useState([]);
     const [alertModal, setAlertModal] = useState({ status: false, message: "", variant: "" });
-    const [fallbackDetails, setFallbackDetails] = useState({ message: "no records find", image: NoResult });
+    const [fallbackDetails, setFallbackDetails] = useState({ message: "no records find", image: "" });
     const [salesDetails, setSalesDetails] = useState({ customerName: "", quantity: "", product: "", date: "", paymentMethod: "" });
 
     const openCreateSaleModal = () => {
