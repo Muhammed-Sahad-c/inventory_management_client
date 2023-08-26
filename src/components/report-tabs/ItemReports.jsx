@@ -5,7 +5,7 @@ import CreateSaleModal from '../modals/CreateSaleModal';
 import EmptyDataStatus from '../emptyitems/EmptyDataStatus';
 import { ItemReport_colums } from '../../constants/data-table';
 import { getItemsReport } from '../../services/reportServices';
-import NoResult from '../../assets/images/no-result-data-document-or-file-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector-removebg-preview.png'
+// import NoResult from '../../assets/images/no-result-data-document-or-file-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector-removebg-preview.png'
 
 
 const ItemReports = () => {
